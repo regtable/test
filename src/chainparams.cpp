@@ -36,14 +36,6 @@ static CBlock CreateGenesisBlock(const char* pszTimestamp, const CScript& genesi
     genesis.vtx.push_back(MakeTransactionRef(std::move(txNew)));
     genesis.hashPrevBlock.SetNull();
     genesis.hashMerkleRoot = BlockMerkleRoot(genesis);
-    LogPrintf("%s\n", genesis.ToString());
-    while (uint256(genesis.GetHash()) > uint256("0x000000000000000000000000000000000000000000000000002a0fac8b39f476"))
-        {
-            if (genesis.nNonce % 1048576 == 0)
-                printf("n=%dM hash=%s\n", genesis.nNonce / 1048576,
-                       genesis.GetHash().ToString().c_str());
-            genesis.nNonce++;
-        }
     return genesis;
 }
 
@@ -62,7 +54,6 @@ static CBlock CreateGenesisBlock(uint32_t nTimeTx, uint32_t nTimeBlock, uint32_t
 {
     const char* pszTimestamp = "Matonis 07-AUG-2012 Parallel Currencies And The Roadmap To Monetary Freedom";
     const CScript genesisOutputScript = CScript();
-
     return CreateGenesisBlock(pszTimestamp, genesisOutputScript, nTimeTx, nTimeBlock, nNonce, nBits, nVersion, genesisReward);
 }
 
@@ -103,20 +94,20 @@ public:
          * The characters are rarely used upper ASCII, not valid as UTF-8, and produce
          * a large 32-bit integer with any alignment.
          */
-        pchMessageStart[0] = 0xe7;
-        pchMessageStart[1] = 0xe4;
+        pchMessageStart[0] = 0xe6;
+        pchMessageStart[1] = 0xe8;
         pchMessageStart[2] = 0xe9;
-        pchMessageStart[3] = 0xe1;
+        pchMessageStart[3] = 0xe5;
         vAlertPubKey = ParseHex("04201f0f85178950503c20d5a947883dff81e727533f1f1da104755fa25275cf68c442b8ad50da3152c10a74ea621da614d3d2048ba25a14f39bfc40c41223543a");
         nDefaultPort = 9901;
         nPruneAfterHeight = 100000;
         m_assumed_blockchain_size = 1;
         m_assumed_chain_state_size = 0;
 
-        genesis = CreateGenesisBlock(1345083811, 1345084288, 0, 0x1d00ffff, 1, 0);
+        genesis = CreateGenesisBlock(1345083810, 1345084287, 2179302059u, 0x1d00ffff, 1, 0);
         consensus.hashGenesisBlock = genesis.GetHash();
-        //assert(consensus.hashGenesisBlock == uint256S("0x7bf84aeacf66f1edc4ed148aa24e6be419a64af881e2144132f0ed3e6bb1a3e8"));
-      //  assert(genesis.hashMerkleRoot == uint256S("0xc3ebd4e73f71e84244bec01954a1b97bdabb04dd4b977fcff573755c9834e418"));
+        assert(consensus.hashGenesisBlock == uint256S("0x0000000032fe677166d54963b62a4677d8957e87c508eaa4fd7eb1c880cd27e3"));
+        assert(genesis.hashMerkleRoot == uint256S("0x3c2d8f85fab4d17aac558cc648a1a58acff0de6deb890c29985690052c5993c2"));
 
         // Note that of those which support the service bits prefix, most only support a subset of
         // possible options.
@@ -139,7 +130,7 @@ public:
 
         vFixedSeeds = std::vector<SeedSpec6>(pnSeed6_main, pnSeed6_main + ARRAYLEN(pnSeed6_main));
 
-        fMiningRequiresPeers = false;
+        fMiningRequiresPeers = true;
         fDefaultConsistencyChecks = false;
         fRequireStandard = true;
         m_is_test_chain = false;
@@ -147,15 +138,29 @@ public:
 
         checkpointData = {
             {
-                {     0, uint256S("0x7bf84aeacf66f1edc4ed148aa24e6be419a64af881e2144132f0ed3e6bb1a3e8")},
-
+                {     0, uint256S("0x0000000032fe677166d54963b62a4677d8957e87c508eaa4fd7eb1c880cd27e3")},
+                { 19080, uint256S("0x000000000000bca54d9ac17881f94193fd6a270c1bb21c3bf0b37f588a40dbd7")},
+                { 30583, uint256S("0xd39d1481a7eecba48932ea5913be58ad3894c7ee6d5a8ba8abeb772c66a6696e")},
+                { 99999, uint256S("0x27fd5e1de16a4270eb8c68dee2754a64da6312c7c3a0e99a7e6776246be1ee3f")},
+                {219999, uint256S("0xab0dad4b10d2370f009ed6df6effca1ba42f01d5070d6b30afeedf6463fbe7a2")},
+                {336000, uint256S("0x4d261cef6e61a5ed8325e560f1d6e36f4698853a4c7134677f47a1d1d842bdf6")},
+                {371850, uint256S("0x6b18adcb0a6e080dae85b74eee2b83fabb157bbea64fab0ed2192b2f6d5b89f3")},
+                {407813, uint256S("0x00000000000000012730b0f48bed8afbeb08164c9d63597afb082e82ea05cec9")},
+                {443561, uint256S("0xf81cea8e4e40b2cfcc13a8bd82436399c35a55df951b95e7128601c1838029ed")},
+                {455470, uint256S("0xd1472c26229f90b8589d331aa47ba9023cb953b92dce342c753e7a6b3431bf1e")},
+                {479189, uint256S("0xc9c065028b20a23fbb9627bbca5946c7497f11e1f72433d4d215c79047cf06f2")},
+                {504051, uint256S("0xff65454ebdf1d89174bec10a3c016db92f7b1d9a4759603472842f254be8d7b3")},
+                {589659, uint256S("0x967c14abf21214639aeff0a270c4543cd3b80fe53178384ac5aa3c277662f1d0")},
             }
         };
 
         chainTxData = ChainTxData{
-          0,
-          0,
-          0
+            // Data as of block 967c14abf21214639aeff0a270c4543cd3b80fe53178384ac5aa3c277662f1d0 (height 589659).
+            1635782211, // * UNIX timestamp of last known number of transactions
+            1992832,    // * total number of transactions between genesis and that timestamp
+                        //   (the tx=... number in the ChainStateFlushed debug.log lines)
+            0.006862798 // * estimated number of transactions per second after that timestamp
+                        // 1992832/(1635782211-1345400356) = 0.006862798
         };
     }
 };
@@ -235,13 +240,28 @@ public:
         checkpointData = {
             {
                 {     0, uint256S("0x00000001f757bb737f6596503e17cd17b0658ce630cc727c0cca81aec47c9f06")},
-                        }
+                { 19080, uint256S("0xb054d63d41852d71b611eaa8eca37d9fddca69b5013cf0966d453402ec8005ce")},
+                { 30583, uint256S("0x5179c0c496b5d25ab81ffe14273ea6928c6ff81c0a0d6a83b5d7d41d64886300")},
+                { 99999, uint256S("0xa7b03b14b8673683d972ab81775f3e85fea4fe689874b5956183466535dc651c")},
+                {219999, uint256S("0x0691bb86c92762c5c4c5a3723585ebeb7ec59310bbb0bdb6666551ab24ad919e")},
+                {336000, uint256S("0xf07adf61615c529f7c282b858d13d3e037b197324cb12e0669c461947494c4e3")},
+                {372751, uint256S("0x000000000000148db599b217c117b5104f5043c55f6ca2a8a065d9fab9f9bba1")},
+                {382019, uint256S("0x3ab75769d7957d9bf0857b5019d0a0e41044fa9ecf30b2f9c32aa457b0864ce5")},
+                {408500, uint256S("0x1636ac08b073d26b28fa40243d58dd5deb215752efe094c92c61998e4e9baf3f")},
+                {412691, uint256S("0x0e20318be88f07f521453435b37cfc516c3de07264a78ed7170985a1126126ab")},
+                {441299, uint256S("0x4091d0836a37c50ceee876000ac0cb251fd10031dab901d2c0677cd86283096e")},
+                {442735, uint256S("0x1b83b33894d51be0b8b323bfab093f638915236e0e40ba3b52bb33fdbc4053cd")},
+            }
         };
 
         chainTxData = ChainTxData{
-          0,
-          0,
-          0
+            // Data as of block 0x1b83b33894d51be0b8b323bfab093f638915236e0e40ba3b52bb33fdbc4053cd (height 442735)
+            1632053274, // * UNIX timestamp of last known number of transactions
+            863997,     // * total number of transactions between genesis and that timestamp
+
+                        //   (the tx=... number in the SetBestChain debug.log lines)
+            0.003020718 // * estimated number of transactions per second after that timestamp
+                        // 863997/(1632053274-1346029522) = 0.003020718
 
         };
     }
