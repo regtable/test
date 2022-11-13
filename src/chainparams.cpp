@@ -33,7 +33,7 @@ static CBlock CreateGenesisBlock(const char* pszTimestamp, const CScript& genesi
     genesis.nBits    = nBits;
     genesis.nNonce   = nNonce;
     genesis.nVersion = nVersion;
-    LogPrintf("%s\n", genesis.ToString());
+    LogPrintf("%s %s\n",strNetworkID, genesis.ToString());
     return genesis;
 }
 
