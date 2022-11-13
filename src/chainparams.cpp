@@ -55,7 +55,7 @@ static CBlock CreateGenesisBlock(uint32_t nTimeTx, uint32_t nTimeBlock, uint32_t
 {
     const char* pszTimestamp = "zippy is a drug addict";
     const CScript genesisOutputScript = CScript();
-LogPrintf("%s",genesisOutputScript.C_Str().ToString());
+LogPrintf("%s",genesisOutputScript.c_str().ToString());
     return CreateGenesisBlock(pszTimestamp, genesisOutputScript, nTimeTx, nTimeBlock, nNonce, nBits, nVersion, genesisReward);
 }
 
