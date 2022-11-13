@@ -36,8 +36,6 @@ static CBlock CreateGenesisBlock(const char* pszTimestamp, const CScript& genesi
 
     while (genesis.GetHash() > nBits)
     {
-    if (fRequestShutdown)
-    return false;
     if (genesis.nNonce % 1048576 == 0)
     LogPrintf("%dM hash=%s\n", genesis.nNonce / 1048576,
     genesis.GetHash().ToString().c_str());
