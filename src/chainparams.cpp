@@ -55,7 +55,6 @@ static CBlock CreateGenesisBlock(uint32_t nTimeTx, uint32_t nTimeBlock, uint32_t
 {
     const char* pszTimestamp = "zippy is a drug addict";
     const CScript genesisOutputScript = CScript();
-LogPrintf(CScript());
     return CreateGenesisBlock(pszTimestamp, genesisOutputScript, nTimeTx, nTimeBlock, nNonce, nBits, nVersion, genesisReward);
 }
 
@@ -106,7 +105,7 @@ public:
         m_assumed_blockchain_size = 1;
         m_assumed_chain_state_size = 0;
 
-        genesis = CreateGenesisBlock(1668361623, 1668361623, 2179302059u, 0x1d00ffff, 1, 0);
+        genesis = CreateGenesisBlock(1668361623, 1668361623, 2179302059u, 0x1d00ffff, 1, 100000);
         consensus.hashGenesisBlock = genesis.GetHash();
         assert(consensus.hashGenesisBlock == uint256S("0xf73cf37f212dd047191324737bec4568ede0ff15bc33b2d236f755d3a3bdb65c"));
         assert(genesis.hashMerkleRoot == uint256S("0x227592dc81dc7831764828a8bf5a7d10d92ba5f8b19eb044e02b183375bb165f"));
