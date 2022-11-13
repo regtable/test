@@ -86,7 +86,7 @@ public:
         consensus.nRuleChangeActivationThreshold = 1916; // 95% of 2016
         consensus.nMinerConfirmationWindow = 2016; // nPowTargetTimespan / nPowTargetSpacing
         // The best chain should have at least this much work.
-        consensus.nMinimumChainWork = uint256S("0x00"); // 350000
+        consensus.nMinimumChainWork = uint256S("0x000000000000000000000000000000000000000000000000002a0fac8b39f476"); // 350000
 
         // By default assume that the signatures in ancestors of this block are valid.
         consensus.defaultAssumeValid = uint256S("0x00");  // 380000
@@ -140,7 +140,7 @@ public:
 
         checkpointData = {
             {
-                {     0, uint256S("0x%s",consensus.hashGenesisBlock)},
+                {     0, uint256S("0xf73cf37f212dd047191324737bec4568ede0ff15bc33b2d236f755d3a3bdb65c")},
 
             }
         };
@@ -230,7 +230,7 @@ public:
 
         checkpointData = {
             {
-              {     0, uint256S("0x%s",consensus.hashGenesisBlock)},
+              {     0, uint256S("0xc7b93b35bef010bc30ef1a5c24c4fe229d48bbd75b288718581e9a1a39d1bab5")},
                     }
         };
 
@@ -305,7 +305,7 @@ public:
         m_is_mockable_chain = true;
         checkpointData = {
             {
-                {     0, uint256S("0x%s",consensus.hashGenesisBlock)},
+                {     0, uint256S("0xc7b93b35bef010bc30ef1a5c24c4fe229d48bbd75b288718581e9a1a39d1bab5s")},
             }
         };
 
