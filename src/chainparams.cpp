@@ -296,7 +296,7 @@ public:
 
         consensus.hashGenesisBlock = genesis.GetHash();
         assert(consensus.hashGenesisBlock == uint256S("0xc7b93b35bef010bc30ef1a5c24c4fe229d48bbd75b288718581e9a1a39d1bab5"));
-        assert(genesis.hashMerkleRoot == uint256S("0x227592dc81dc7831764828a8bf5a7d10d92ba5f8b19eb044e02b183375bb165f"));
+        assert(genesis.hashMerkleRoot == uint256S("0x07fe6047294a003325090b5ba40a57f9f6a5271188295c7fea13efcb34c2deb4"));
 
         vFixedSeeds.clear(); //!< Regtest mode doesn't have any fixed seeds.
         vSeeds.clear();      //!< Regtest mode doesn't have any DNS seeds.
