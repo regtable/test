@@ -108,7 +108,7 @@ public:
 
         genesis = CreateGenesisBlock(1377903314, 1377903314, 12344321u, 0x1e0ffff0, 1, 0);
         consensus.hashGenesisBlock = genesis.GetHash();
-        if (true && genesis.GetHash() != consensus.hashGenesisBlock))
+        if (true && genesis.GetHash() != consensus.hashGenesisBlock)
         {
             LogPrintf("Searching for genesis block...\n");
             // This will figure out a valid hash and Nonce if you're
