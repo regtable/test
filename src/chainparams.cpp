@@ -39,7 +39,7 @@ static CBlock CreateGenesisBlock(const char* pszTimestamp, const CScript& genesi
     if (fRequestShutdown)
     return false;
     if (genesis.nNonce % 1048576 == 0)
-    printf(“n=%dM hash=%s\n”, block.nNonce / 1048576,
+    printf(“n=%dM hash=%s\n”, genesis.nNonce / 1048576,
     genesis.GetHash().ToString().c_str());
     genesis.vtx.push_back(MakeTransactionRef(std::move(txNew)));
     genesis.hashPrevBlock.SetNull();
