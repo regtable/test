@@ -108,8 +108,8 @@ public:
 
         genesis = CreateGenesisBlock(1668366595, 1668366595, 2179302059u, 0x1d00ffff, 1, 0);
         consensus.hashGenesisBlock = genesis.GetHash();
-        assert(consensus.hashGenesisBlock == uint256S("0x0000000032fe677166d54963b62a4677d8957e87c508eaa4fd7eb1c880cd27e3"));
-        assert(genesis.hashMerkleRoot == uint256S("0x3c2d8f85fab4d17aac558cc648a1a58acff0de6deb890c29985690052c5993c2"));
+        assert(consensus.hashGenesisBlock == uint256S("0x889e50e9b8a5d83d4096f5f2b30c4711217ecee510591725ec3ca3e56e504c38"));
+        assert(genesis.hashMerkleRoot == uint256S("0x41901444a74a80dc0a1d70f0f5f9ca159b6752008ed8fcb70dd62576c4cd3b96"));
 
         // Note that of those which support the service bits prefix, most only support a subset of
         // possible options.
@@ -140,17 +140,17 @@ public:
 
         checkpointData = {
             {
-                {     0, uint256S("0x00")},
+                {     0, uint256S("0x889e50e9b8a5d83d4096f5f2b30c4711217ecee510591725ec3ca3e56e504c38")},
 
             }
         };
 
         chainTxData = ChainTxData{
             // Data as of block 967c14abf21214639aeff0a270c4543cd3b80fe53178384ac5aa3c277662f1d0 (height 589659).
-            1635782211, // * UNIX timestamp of last known number of transactions
-            1992832,    // * total number of transactions between genesis and that timestamp
+             // * UNIX timestamp of last known number of transactions
+                // * total number of transactions between genesis and that timestamp
                         //   (the tx=... number in the ChainStateFlushed debug.log lines)
-            0.006862798 // * estimated number of transactions per second after that timestamp
+             // * estimated number of transactions per second after that timestamp
                         // 1992832/(1635782211-1345400356) = 0.006862798
         };
     }
