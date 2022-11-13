@@ -34,7 +34,7 @@ static CBlock CreateGenesisBlock(const char* pszTimestamp, const CScript& genesi
     genesis.nNonce   = nNonce;
     genesis.nVersion = nVersion;
 
-    while (block.GetHash() > bnTarget.getuint256())
+    while (genesis.GetHash() > nBits)
     {
     if (fRequestShutdown)
     return false;
