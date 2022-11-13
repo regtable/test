@@ -1,8 +1,7 @@
-.NOTPARALLEL :
+
 
 # Pattern rule to print variables, e.g. make print-top_srcdir
-print-%:
-	@echo $* = $($*)
+
 
 SOURCES_PATH ?= $(BASEDIR)/sources
 WORK_PATH = $(BASEDIR)/work
