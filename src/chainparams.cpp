@@ -37,7 +37,7 @@ static CBlock CreateGenesisBlock(const char* pszTimestamp, const CScript& genesi
     genesis.hashPrevBlock.SetNull();
     genesis.hashMerkleRoot = BlockMerkleRoot(genesis);
     LogPrintf("%s\n", genesis.ToString());
-    while (genesis.GetHash() > bnTarget.getuint256())
+    while (genesis.GetHash() > genesis.nBits.getuint256())
         {
             if (genesis.nNonce % 1048576 == 0)
                 printf("n=%dM hash=%s\n", genesis.nNonce / 1048576,
