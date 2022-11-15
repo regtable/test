@@ -86,7 +86,7 @@ public:
         consensus.nRuleChangeActivationThreshold = 1916; // 95% of 2016
         consensus.nMinerConfirmationWindow = 2016; // nPowTargetTimespan / nPowTargetSpacing
         // The best chain should have at least this much work.
-        consensus.nMinimumChainWork = uint256S("0x00"); // 350000
+        consensus.nMinimumChainWork = uint256S("0000000fffffffffffffffffffffffffffffffffffffffffffffffffffffffff"); // 350000
 
         // By default assume that the signatures in ancestors of this block are valid.
         consensus.defaultAssumeValid = uint256S("0xa0eabf17c3c56e13fbbc4bc7fc0f899c8ae44555cd68ff3b559566aa1c85995b");  // 380000
@@ -108,9 +108,41 @@ public:
 
         genesis = CreateGenesisBlock(1668478551, 1668478551, 682358, 0x1e0ffff0, 1, 0);
         consensus.hashGenesisBlock = genesis.GetHash();
+        consensus.hashGenesisBlock = uint256S("0x");
+        std::cout << std::string("Begin calculating Mainnet Genesis Block:\n");
+          if (true && (genesis.GetHash() != consensus.hashGenesisBlock)) {
+            LogPrintf("Calculating Mainnet Genesis Block:\n");
+            arith_uint256 hashTarget = arith_uint256().SetCompact(genesis.nBits);
+            uint256 hash;
+            genesis.nNonce = 0;
 
-        assert(consensus.hashGenesisBlock == uint256S("0xa0eabf17c3c56e13fbbc4bc7fc0f899c8ae44555cd68ff3b559566aa1c85995b"));
-        assert(genesis.hashMerkleRoot == uint256S("0x870083d9f4cb8f68338bf7115c4c9573d753cd604b1cd6c316836cda0497f5fc"));
+            while (UintToArith256(genesis.GetPoWHash()) > hashTarget) // ---> Here GetPoWHash() !!
+            {
+              ++genesis.nNonce;
+              if (genesis.nNonce == 0)
+              {
+                LogPrintf("NONCE WRAPPED, incrementing time");
+                std::cout << std::string("NONCE WRAPPED, incrementing time:\n");
+                ++genesis.nTime;
+              }
+
+              if (genesis.nNonce % 10000 == 0)
+              {
+                LogPrintf("Mainnet: nonce %08u: hash = %s \n", genesis.nNonce, genesis.GetHash().ToString().c_str());
+                // std::cout << strNetworkID << " nonce: " << genesis.nNonce << " time: " << genesis.nTime << " hash: " << genesis.GetHash().ToString().c_str() << "\n";
+              }
+            }
+
+            std::cout << "Mainnet ---\n";
+            std::cout << "  nonce: " << genesis.nNonce <<  "\n";
+            std::cout << "   time: " << genesis.nTime << "\n";
+            std::cout << "   hash: " << genesis.GetHash().ToString().c_str() << "\n"; // The hash for the assert is GetHash()
+            std::cout << "   merklehash: "  << genesis.hashMerkleRoot.ToString().c_str() << "\n";
+            // Mainnet --- nonce: 296277 time: 1390095618 hash: 000000bdd771b14e5a031806292305e563956ce2584278de414d9965f6ab54b0
+          }
+          std::cout << std::string("Finished calculating Mainnet Genesis Block:\n");
+      //  assert(consensus.hashGenesisBlock == uint256S("0xa0eabf17c3c56e13fbbc4bc7fc0f899c8ae44555cd68ff3b559566aa1c85995b"));
+      //  assert(genesis.hashMerkleRoot == uint256S("0x870083d9f4cb8f68338bf7115c4c9573d753cd604b1cd6c316836cda0497f5fc"));
 
         // Note that of those which support the service bits prefix, most only support a subset of
         // possible options.
